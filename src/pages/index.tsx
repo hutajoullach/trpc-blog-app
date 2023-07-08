@@ -5,7 +5,9 @@ import { api } from "~/utils/api";
 import { SignInButton, SignOutButton, useUser } from "@clerk/nextjs";
 
 export default function Home() {
-  const hello = api.example.hello.useQuery({ text: "from tRPC" });
+  // const hello = api.example.hello.useQuery({ text: "from tRPC" });
+
+  const { data } = api.example.getAll.useQuery();
 
   const { user, isSignedIn, isLoaded } = useUser();
 
