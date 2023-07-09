@@ -8,6 +8,7 @@ import usePostFormModal from "~/store/post-form-modal-store";
 
 import CustomButton from "../custom-button";
 import FormField from "./form-field";
+import ImageUpload from "../inputs/image-upload";
 
 import { toast } from "react-hot-toast";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
@@ -46,13 +47,13 @@ const PostForm = () => {
     defaultValues: {
       title: "",
       content: "",
-      image: "",
+      imageSrc: "",
     },
   });
 
   const title = watch("title");
   const content = watch("content");
-  const image = watch("image");
+  const imageSrc = watch("imageSrc");
 
   const setCustomValue = (id: string, value: any) => {
     setValue(id, value, {
@@ -68,10 +69,12 @@ const PostForm = () => {
       return null;
     }
 
+    console.log(data.imageSrc);
+
     mutate({
       title: data.title,
       content: data.content,
-      image: "",
+      imageSrc: data.imageSrc,
     });
   };
 
@@ -125,6 +128,11 @@ const PostForm = () => {
         errors={errors}
       />
 
+      <ImageUpload
+        onChange={(value) => setCustomValue("imageSrc", value)}
+        value={imageSrc}
+      />
+
       {/* <FormField
         type="url"
         title=""
@@ -152,7 +160,7 @@ const PostForm = () => {
         <CustomButton
           type="submit"
           title="Post"
-          styles="bg-[#1dc071] py-2"
+          styles="bg-[#1dc071] py-2 px-8"
           handleClick={handleSubmit(onSubmit)}
         />
       </div>

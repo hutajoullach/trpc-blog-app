@@ -16,7 +16,7 @@ const CustomButton = ({
   return (
     <button
       type={type}
-      className={`font-epilogue rounded-[10px] px-4 text-[16px] leading-[26px] text-white ${styles}`}
+      className={`font-epilogue rounded-md px-4 text-[16px] leading-[26px] text-white ${styles}`}
       onClick={handleClick}
     >
       {title}

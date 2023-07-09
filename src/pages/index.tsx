@@ -34,7 +34,7 @@ export default function Home() {
               <PostCard
                 key={`${post?.id}`}
                 id={post?.id}
-                image={post?.image ? post.image : ""}
+                image={post?.imageSrc ? post.imageSrc : ""}
                 title={post?.title}
                 name={author.username}
                 avatarUrl={author.profileImageUrl}

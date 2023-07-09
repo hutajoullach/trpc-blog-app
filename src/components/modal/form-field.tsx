@@ -37,6 +37,7 @@ const FormField = ({
           // value={state}
           disabled={disabled}
           className="bg-light-white-100 w-full rounded-md bg-slate-200 p-4 outline-0"
+          rows={5}
           // onChange={(e) => setState(e.target.value)}
           {...register(id, { required })}
         />

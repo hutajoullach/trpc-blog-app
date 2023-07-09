@@ -102,7 +102,7 @@ export const postsRouter = createTRPCRouter({
       z.object({
         title: z.string().min(1).max(120),
         content: z.string().min(1).max(50000),
-        image: z.string().min(0).max(80),
+        imageSrc: z.string().min(0).max(220),
       })
     )
     .mutation(async ({ ctx, input }) => {
@@ -116,7 +116,7 @@ export const postsRouter = createTRPCRouter({
           authorId,
           title: input.title,
           content: input.content,
-          image: input.image,
+          imageSrc: input.imageSrc,
         },
       });
 
