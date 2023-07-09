@@ -78,16 +78,6 @@ const PostCard = ({
             alt="post image"
           />
         )}
-        {/* <Image
-          // src={image ? image : defaultImg!}
-          // src="/images/accessories-bag.jpg"
-          // src={defaultImg}
-          src={images[random]}
-          width={414}
-          height={314}
-          className="h-full w-full rounded-2xl object-cover"
-          alt="post image"
-        /> */}
 
         <div className="absolute bottom-0 right-0 flex h-1/3 w-full items-end justify-end gap-2 rounded-b-2xl bg-gradient-to-b from-transparent to-black/50 p-4 text-lg font-semibold text-white">
           <p className="w-full truncate">{title}</p>

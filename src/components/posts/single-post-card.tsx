@@ -14,8 +14,8 @@ const SinglePostCard = ({ postWithUser }: { postWithUser: PostWithUser }) => {
   const { post, author } = postWithUser;
 
   return (
-    <div className={`flex w-full rounded-lg px-3 py-3 md:max-w-2xl`}>
-      <div className="flex w-full flex-col gap-4 px-6 py-6">
+    <div className="flex h-[95%] w-full items-center rounded-lg bg-slate-200 px-3 py-3 md:max-w-2xl">
+      <div className="flex h-full w-full flex-col gap-4 px-6 py-6">
         <div className="flex w-full flex-col items-center gap-5">
           <div className="flex w-full rounded-xl">
             <Image
@@ -40,10 +40,9 @@ const SinglePostCard = ({ postWithUser }: { postWithUser: PostWithUser }) => {
             </div>
           </div>
 
-          <span className="text-md flex justify-center font-semibold text-neutral-600">
-            dropped icon
-          </span>
-          <div className="flex w-full rounded-full bg-white px-6 py-2 text-xs text-neutral-500 md:max-w-xs">
+          <div className="text-md flex justify-center font-semibold text-neutral-600"></div>
+          {/* <div className="flex w-full rounded-full bg-white px-6 py-2 text-xs text-neutral-500 md:max-w-xs"> */}
+          <div className="w-full rounded-lg bg-white px-3 py-4 text-sm">
             {/* {pin.icontype === "emoji" &&
               emojis.map(({ label, emoji }) => {
                 if (label === pin.emoji)
@@ -69,19 +68,25 @@ const SinglePostCard = ({ postWithUser }: { postWithUser: PostWithUser }) => {
                     </span>
                   );
               })} */}
+            <p>{post.title}</p>
           </div>
 
-          <span
+          {/* <span
             className={`-mb-4 flex w-full text-left text-sm text-neutral-600`}
           >
-            message
-          </span>
-          <div className={`w-full rounded-lg bg-slate-700 px-3 py-4 text-sm`}>
+            content
+          </span> */}
+          {/* <div className={`w-full rounded-lg bg-slate-700 px-3 py-4 text-sm`}>
             <p>{post.content}</p>
-          </div>
+          </div> */}
+        </div>
+        <div
+          className={`flex h-full w-full flex-1 rounded-lg bg-white px-3 py-4 text-sm`}
+        >
+          <p>{post.content}</p>
         </div>
         <div className="-mb-1 flex flex-col rounded-lg text-sm text-neutral-600">
-          <span className="font-light">dropped @</span>
+          {/* <span className="font-light">dropped @</span> */}
           {/* {pin.city && pin.country && (
             <span className="font-semibold">
               {pin.city}, {pin.country}

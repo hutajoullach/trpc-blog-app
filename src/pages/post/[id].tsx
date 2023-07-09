@@ -33,7 +33,7 @@ const SinglePostPage = () => {
 
   return (
     <PageLayout>
-      <div className={`flex items-center justify-center`}>
+      <div className="flex h-full items-center justify-center">
         <SinglePostCard postWithUser={data} />
       </div>
     </PageLayout>

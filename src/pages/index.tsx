@@ -26,7 +26,7 @@ export default function Home() {
   return (
     <>
       <PageLayout>
-        <Navbar />
+        {/* <Navbar /> */}
 
         <section className="paddings mb-16 flex flex-col items-center justify-start">
           <section className="mt-10 grid w-full grid-cols-1 gap-10 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
