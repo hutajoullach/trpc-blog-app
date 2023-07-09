@@ -1,5 +1,9 @@
-import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 import { TRPCError } from "@trpc/server";
+import {
+  createTRPCRouter,
+  publicProcedure,
+  privateProcedure,
+} from "~/server/api/trpc";
 
 import { filterUserForClient } from "~/server/helpers/filter-user-for-client";
 
@@ -46,21 +50,68 @@ const addUserDataToPosts = async (posts: Post[]) => {
 };
 
 export const postsRouter = createTRPCRouter({
+  getById: publicProcedure
+    .input(z.object({ id: z.string() }))
+    .query(async ({ ctx, input }) => {
+      const post = await ctx.prisma.post.findUnique({
+        where: { id: input.id },
+      });
+
+      if (!post) throw new TRPCError({ code: "NOT_FOUND" });
+
+      return (await addUserDataToPosts([post]))[0];
+    }),
+
   getAll: publicProcedure.query(async ({ ctx }) => {
     const posts = await ctx.prisma.post.findMany({
       take: 100,
       orderBy: [{ createdAt: "desc" }],
     });
 
-    // const userId = posts.map((post) => post.authorId);
-    // const users = (
-    //   await clerkClient.users.getUserList({
-    //     userId: userId,
-    //     limit: 100,
-    //   })
-    // ).map(filterUserForClient);
-
-    // return posts;
     return addUserDataToPosts(posts);
   }),
+
+  getPostsByUserId: publicProcedure
+    .input(
+      z.object({
+        userId: z.string(),
+      })
+    )
+    .query(({ ctx, input }) =>
+      ctx.prisma.post
+        .findMany({
+          where: {
+            authorId: input.userId,
+          },
+          take: 100,
+          orderBy: [{ createdAt: "desc" }],
+        })
+        .then(addUserDataToPosts)
+    ),
+
+  create: privateProcedure
+    .input(
+      z.object({
+        title: z.string().min(1).max(120),
+        content: z.string().min(1).max(50000),
+        image: z.string().min(0).max(80),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      const authorId = ctx.userId;
+
+      // const { success } = await ratelimit.limit(authorId);
+      // if (!success) throw new TRPCError({ code: "TOO_MANY_REQUESTS" });
+
+      const post = await ctx.prisma.post.create({
+        data: {
+          authorId,
+          title: input.title,
+          content: input.content,
+          image: input.image,
+        },
+      });
+
+      return post;
+    }),
 });

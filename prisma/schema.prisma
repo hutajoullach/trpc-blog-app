@@ -17,7 +17,9 @@ model Post {
     updatedAt DateTime @updatedAt
 
     // content  String @db.VarChar(50000)
+    title String @db.VarChar(120)
     content  String @db.Text
+    image String @db.VarChar(80)
     authorId String
 
     @@index([authorId])

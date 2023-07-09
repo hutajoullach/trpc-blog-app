@@ -5,6 +5,7 @@ import { RouterOutputs, api } from "~/utils/api";
 import Navbar from "~/components/navbar";
 import PostCard from "~/components/post-card";
 import { PageLayout } from "~/components/layout";
+import { LoadingPage } from "../components/loading";
 
 import { SignInButton, SignOutButton, useUser } from "@clerk/nextjs";
 
@@ -13,9 +14,14 @@ export default function Home() {
 
   const { user, isSignedIn, isLoaded } = useUser();
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <LoadingPage />;
 
-  if (!data) return <div>Something went wrong</div>;
+  if (!data)
+    return (
+      <div className="flex h-full justify-center text-slate-100">
+        Something went wrong
+      </div>
+    );
 
   return (
     <>
