@@ -10,6 +10,8 @@ import { filterUserForClient } from "~/server/helpers/filter-user-for-client";
 import { clerkClient } from "@clerk/nextjs/server";
 import { z } from "zod";
 import type { Post } from "@prisma/client";
+import { Ratelimit } from "@upstash/ratelimit";
+import { Redis } from "@upstash/redis";
 
 const addUserDataToPosts = async (posts: Post[]) => {
   const userId = posts.map((post) => post.authorId);
@@ -48,6 +50,12 @@ const addUserDataToPosts = async (posts: Post[]) => {
     };
   });
 };
+
+const ratelimit = new Ratelimit({
+  redis: Redis.fromEnv(),
+  limiter: Ratelimit.slidingWindow(3, "1 m"),
+  analytics: true,
+});
 
 export const postsRouter = createTRPCRouter({
   getById: publicProcedure
@@ -100,8 +108,8 @@ export const postsRouter = createTRPCRouter({
     .mutation(async ({ ctx, input }) => {
       const authorId = ctx.userId;
 
-      // const { success } = await ratelimit.limit(authorId);
-      // if (!success) throw new TRPCError({ code: "TOO_MANY_REQUESTS" });
+      const { success } = await ratelimit.limit(authorId);
+      if (!success) throw new TRPCError({ code: "TOO_MANY_REQUESTS" });
 
       const post = await ctx.prisma.post.create({
         data: {

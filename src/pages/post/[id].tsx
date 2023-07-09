@@ -10,31 +10,31 @@ const SinglePostPage = () => {
   let id = router.query.id ?? "";
   if (Array.isArray(id)) id = id.join("");
 
-  // const { data, isFetching, isError } = api.posts.getById.useQuery(
-  //   {
-  //     id,
-  //   },
-  //   { staleTime: Infinity }
-  // );
+  const { data, isFetching, isError } = api.posts.getById.useQuery(
+    {
+      id,
+    },
+    { staleTime: Infinity }
+  );
 
-  // if (isFetching || !data)
-  //   return (
-  //     <div className="flex h-screen items-center justify-center bg-black text-slate-100">
-  //       <LoadingPage />
-  //     </div>
-  //   );
+  if (isFetching || !data)
+    return (
+      <div className="flex h-screen items-center justify-center bg-black text-slate-100">
+        <LoadingPage />
+      </div>
+    );
 
-  // if (isError)
-  //   return (
-  //     <div className="flex h-screen items-center justify-center bg-black text-slate-100">
-  //       Page Not Found
-  //     </div>
-  //   );
+  if (isError)
+    return (
+      <div className="flex h-screen items-center justify-center bg-black text-slate-100">
+        Page Not Found
+      </div>
+    );
 
   return (
     <PageLayout>
       <div className={`flex items-center justify-center`}>
-        {/* <SinglePostCard postWithUser={data} /> */}
+        <SinglePostCard postWithUser={data} />
       </div>
     </PageLayout>
   );
