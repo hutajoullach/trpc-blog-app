@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -32,6 +33,7 @@ const PostCard = ({
   userId,
   createdAt,
 }: PostCardProps) => {
+  const router = useRouter();
   const [randomLikes, setRandomLikes] = useState(0);
   const [randomViews, setRandomViews] = useState("");
 
@@ -45,7 +47,7 @@ const PostCard = ({
   return (
     <div
       key={id}
-      // onClick={() => router.push(`/post/${id}`)}
+      onClick={() => router.push(`/post/${id}`)}
       className="drop-shadow-card flex flex-col items-center justify-center rounded-2xl bg-white"
     >
       <Link
