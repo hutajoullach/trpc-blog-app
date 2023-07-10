@@ -11,7 +11,12 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 dayjs.extend(relativeTime);
 
-import { accessoriesBag, dessert, fishVegetables, threeDogs } from "../assets";
+import {
+  accessoriesBag,
+  dessert,
+  fishVegetables,
+  threeDogs,
+} from "../../assets";
 
 import { api } from "~/utils/api";
 import type { RouterOutputs } from "~/utils/api";

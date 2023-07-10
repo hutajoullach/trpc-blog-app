@@ -3,8 +3,8 @@
 @tailwind utilities;
 
 body {
-  /* @apply bg-black text-slate-100; */
   @apply bg-black text-slate-800;
+  /* @apply bg-[#0a0a0a] text-[#f8fafc]; */
 
   overscroll-behavior: none;
 }

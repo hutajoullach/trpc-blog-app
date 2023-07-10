@@ -4,7 +4,7 @@ import Link from "next/link";
 import { RouterOutputs, api } from "~/utils/api";
 
 import Navbar from "~/components/navbar";
-import PostCard from "~/components/post-card";
+import PostCard from "~/components/posts/post-card";
 import { PageLayout } from "~/components/layout";
 import { LoadingPage } from "../components/loading";
 
