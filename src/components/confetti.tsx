@@ -7,22 +7,26 @@ type ConfettiProps = {
 
 const Confetti = ({ isDisplayed }: ConfettiProps) => {
   const [windowDimension, setWindowDimension] = useState({
-    width: window.innerWidth,
-    height: window.innerHeight,
+    width: 0,
+    height: 0,
   });
 
   const detectSize = () => {
-    setWindowDimension({
-      width: window.innerWidth,
-      height: window.innerHeight,
-    });
+    if (typeof window !== "undefined") {
+      setWindowDimension({
+        width: window.innerWidth,
+        height: window.innerHeight,
+      });
+    }
   };
 
   useEffect(() => {
-    window.addEventListener("resize", detectSize);
-    return () => {
-      window.removeEventListener("resize", detectSize);
-    };
+    if (typeof window !== "undefined") {
+      window.addEventListener("resize", detectSize);
+      return () => {
+        window.removeEventListener("resize", detectSize);
+      };
+    }
   }, [windowDimension]);
 
   return (
