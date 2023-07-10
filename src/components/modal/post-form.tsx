@@ -6,6 +6,7 @@ import { SignInButton, UserButton, useUser } from "@clerk/nextjs";
 import { api } from "~/utils/api";
 import type { RouterOutputs } from "~/utils/api";
 import usePostFormModal from "~/store/post-form-modal-store";
+import useDisplayConfetti from "~/store/display-confetti-store";
 
 import CustomButton from "../inputs/custom-button";
 import FormField from "./form-field";
@@ -21,6 +22,7 @@ const PostForm = () => {
   const router = useRouter();
   const { user } = useUser();
   const postFormModal = usePostFormModal();
+  const displayConfetti = useDisplayConfetti();
 
   const [defaultImg, setDefaultImg] = useState<string>("");
 
@@ -37,6 +39,10 @@ const PostForm = () => {
       toast.success("posted successfully!");
       reset();
       postFormModal.onClose();
+      displayConfetti.toggleShow();
+      setTimeout(() => {
+        displayConfetti.toggleHide();
+      }, 7000);
       void ctx.posts.getAll.invalidate();
     },
     onError: (e) => {

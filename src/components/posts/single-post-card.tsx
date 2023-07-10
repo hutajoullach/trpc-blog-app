@@ -6,6 +6,8 @@ import { api } from "~/utils/api";
 import type { RouterOutputs } from "~/utils/api";
 
 import { toast } from "react-hot-toast";
+import { BiSolidHeart } from "react-icons/bi";
+import { FiEye } from "react-icons/fi";
 
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
@@ -21,6 +23,16 @@ import {
 type PostWithUser = RouterOutputs["posts"]["getAll"][number];
 const SinglePostCard = ({ postWithUser }: { postWithUser: PostWithUser }) => {
   const { post, author } = postWithUser;
+
+  const [randomLikes, setRandomLikes] = useState(0);
+  const [randomViews, setRandomViews] = useState("");
+
+  useEffect(() => {
+    setRandomLikes(Math.floor(Math.random() * 10000));
+    setRandomViews(
+      String((Math.floor(Math.random() * 10000) / 1000).toFixed(1) + "k")
+    );
+  }, []);
 
   const images = [accessoriesBag, dessert, fishVegetables, threeDogs];
   const [defaultImg, setDefaultImg] = useState<StaticImageData | undefined>(
@@ -87,10 +99,27 @@ const SinglePostCard = ({ postWithUser }: { postWithUser: PostWithUser }) => {
         >
           <p>{post.content}</p>
         </div>
-        <div className="-mb-1 flex flex-col rounded-lg text-sm text-neutral-600">
-          <span className="flex-end flex font-light">
+
+        <div className="flex items-center justify-between gap-3 px-2 py-1">
+          <span className="truncate text-xs">
             {dayjs(post.createdAt).fromNow()}
           </span>
+          <div className="flex items-center justify-center gap-2">
+            <div className="flex items-center justify-center gap-2">
+              <BiSolidHeart
+                color="red"
+                className="cursor-pointer hover:opacity-80"
+                onClick={() => {
+                  toast.error("Voting article not available yet!");
+                }}
+              />
+              <p className="text-xs">{randomLikes}</p>
+            </div>
+            <div className="flex items-center justify-center gap-2">
+              <FiEye color="gray" />
+              <p className="text-xs">{randomViews}</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>

@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import type { StaticImageData } from "next/image";
 
+import { toast } from "react-hot-toast";
 import { BiSolidHeart } from "react-icons/bi";
 import { FiEye } from "react-icons/fi";
 
@@ -67,7 +68,6 @@ const PostCard = ({
   return (
     <div
       key={id}
-      onClick={() => router.push(`/post/${id}`)}
       className="drop-shadow-card group flex flex-col items-center justify-center rounded-2xl bg-white"
     >
       <Link
@@ -90,23 +90,37 @@ const PostCard = ({
       </Link>
 
       <div className="flex w-full flex-col items-center justify-between px-3 py-2 text-sm font-semibold">
-        <Link href={`/profile/${userId}`} className="w-full">
-          <div className="flex items-center justify-between gap-2">
-            <Image
-              src={avatarUrl}
-              width={24}
-              height={24}
-              className="rounded-full"
-              alt="profile image"
-            />
-            <span>{`@${name}`}</span>
-          </div>
-        </Link>
+        <div className="flex w-full items-center justify-between gap-2">
+          <Image
+            src={avatarUrl}
+            width={24}
+            height={24}
+            className="cursor-pointer rounded-full hover:opacity-80"
+            alt="profile image"
+            onClick={() => {
+              // router.push(`/profile/${userId}`)
+              toast.error("Profile page not available yet!");
+            }}
+          />
+          <div
+            className="cursor-pointer hover:opacity-80"
+            onClick={() => {
+              // router.push(`/profile/${userId}`)
+              toast.error("Profile page not available yet!");
+            }}
+          >{`@${name}`}</div>
+        </div>
 
         <div className="flex items-center justify-center gap-3 py-1">
           <span className="truncate text-xs">{dayjs(createdAt).fromNow()}</span>
           <div className="flex items-center justify-center gap-2">
-            <BiSolidHeart color="red" />
+            <BiSolidHeart
+              color="red"
+              className="cursor-pointer hover:opacity-80"
+              onClick={() => {
+                toast.error("Voting article not available yet!");
+              }}
+            />
             <p className="text-xs">{randomLikes}</p>
           </div>
           <div className="flex items-center justify-center gap-2">

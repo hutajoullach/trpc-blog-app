@@ -4,10 +4,12 @@ import Link from "next/link";
 import { RouterOutputs, api } from "~/utils/api";
 import { SignInButton, SignOutButton, useUser } from "@clerk/nextjs";
 
+import useDisplayConfetti from "~/store/display-confetti-store";
 import Navbar from "~/components/navbar";
 import PostCard from "~/components/posts/post-card";
 import { PageLayout } from "~/components/layout";
 import { LoadingPage } from "../components/loading";
+import Confetti from "~/components/confetti";
 
 type PostWithUser = RouterOutputs["posts"]["getAll"];
 type CardSectionProps = {
@@ -72,6 +74,8 @@ const Home = () => {
   const { data, isLoading } = api.posts.getAll.useQuery();
   const { user, isSignedIn, isLoaded } = useUser();
 
+  const displayConfetti = useDisplayConfetti();
+
   const [input, setInput] = useState<string>("");
   const [filteredData, setFilteredData] = useState<PostWithUser | undefined>(
     data
@@ -106,6 +110,7 @@ const Home = () => {
     <>
       <PageLayout>
         <Navbar handleChange={handleChange} />
+        <Confetti isDisplayed={displayConfetti.isDisplayed} />
 
         <section className="paddings mb-16 flex flex-col items-center justify-start">
           <section className="mt-10 grid w-full grid-cols-1 gap-10 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
