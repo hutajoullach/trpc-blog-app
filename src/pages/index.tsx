@@ -82,7 +82,7 @@ export default function Home() {
   const { data, isLoading } = api.posts.getAll.useQuery();
   const { user, isSignedIn, isLoaded } = useUser();
 
-  const [input, setInput] = useState<string>();
+  const [input, setInput] = useState<string>("");
   const [filteredData, setFilteredData] = useState<PostWithUser | undefined>(
     data
   );
