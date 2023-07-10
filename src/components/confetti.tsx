@@ -7,8 +7,8 @@ type ConfettiProps = {
 
 const Confetti = ({ isDisplayed }: ConfettiProps) => {
   const [windowDimension, setWindowDimension] = useState({
-    width: 0,
-    height: 0,
+    width: 1280,
+    height: 690,
   });
 
   const detectSize = () => {
@@ -18,6 +18,7 @@ const Confetti = ({ isDisplayed }: ConfettiProps) => {
         height: window.innerHeight,
       });
     }
+    console.log(windowDimension);
   };
 
   useEffect(() => {
