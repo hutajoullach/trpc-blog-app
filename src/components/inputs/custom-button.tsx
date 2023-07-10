@@ -5,6 +5,7 @@ type CustomButtonProps = {
   title: string;
   handleClick: () => void;
   styles?: string;
+  disabled?: boolean;
 };
 
 const CustomButton = ({
@@ -12,12 +13,14 @@ const CustomButton = ({
   title,
   handleClick,
   styles,
+  disabled,
 }: CustomButtonProps) => {
   return (
     <button
       type={type}
       className={`font-epilogue rounded-md px-4 text-[16px] leading-[26px] text-white ${styles}`}
       onClick={handleClick}
+      disabled={disabled}
     >
       {title}
     </button>

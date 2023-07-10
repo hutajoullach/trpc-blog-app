@@ -68,18 +68,18 @@ const PostCard = ({
     <div
       key={id}
       onClick={() => router.push(`/post/${id}`)}
-      className="drop-shadow-card flex flex-col items-center justify-center rounded-2xl bg-white"
+      className="drop-shadow-card group flex flex-col items-center justify-center rounded-2xl bg-white"
     >
       <Link
         href={`/post/${id}`}
-        className="group relative flex h-full w-full items-center justify-center"
+        className="group relative flex h-full w-full items-center justify-center overflow-hidden rounded-2xl"
       >
         {defaultImg && (
           <Image
             src={image ? image : defaultImg}
             width={414}
             height={314}
-            className="h-60 w-auto rounded-2xl object-cover"
+            className="h-60 w-auto rounded-2xl object-cover transition group-hover:scale-110"
             alt="post image"
           />
         )}

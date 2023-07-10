@@ -124,6 +124,7 @@ const PostForm = () => {
           title="Post"
           styles="bg-[#1dc071] py-2 px-8"
           handleClick={handleSubmit(onSubmit)}
+          disabled={isPosting}
         />
       </div>
     </form>

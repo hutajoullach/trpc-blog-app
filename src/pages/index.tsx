@@ -48,14 +48,6 @@ const CardSection = ({ filteredData, input }: CardSectionProps) => {
 
   if (input !== "") {
     return null;
-
-    return (
-      <div className="z-1 fixed left-0 top-0 h-full w-full text-slate-100">
-        <div className="flex h-full w-full items-center justify-center">
-          No match found
-        </div>
-      </div>
-    );
   }
 
   return (
