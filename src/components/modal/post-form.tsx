@@ -1,5 +1,6 @@
-import React from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import type { StaticImageData } from "next/image";
 import { SignInButton, UserButton, useUser } from "@clerk/nextjs";
 
 import { api } from "~/utils/api";
@@ -13,11 +14,22 @@ import ImageUpload from "../inputs/image-upload";
 import { toast } from "react-hot-toast";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 
+import { defaultImgList } from "../../constants";
+import type { DefaultImg } from "../../constants";
+
 const PostForm = () => {
   const router = useRouter();
   const { user } = useUser();
-
   const postFormModal = usePostFormModal();
+
+  const [defaultImg, setDefaultImg] = useState<string>("");
+
+  useEffect(() => {
+    const random = Math.floor(Math.random() * defaultImgList.length);
+    if (random !== null || random !== undefined) {
+      setDefaultImg((defaultImgList[random] as DefaultImg)?.url);
+    }
+  }, [defaultImgList]);
 
   const ctx = api.useContext();
   const { mutate, isLoading: isPosting } = api.posts.create.useMutation({
@@ -67,10 +79,14 @@ const PostForm = () => {
 
     console.log(data.imageSrc);
 
+    if (data.imageSrc === "") {
+      data.imageSrc = undefined;
+    }
+
     mutate({
       title: data.title,
       content: data.content,
-      imageSrc: data.imageSrc,
+      imageSrc: data.imageSrc || defaultImg,
     });
   };
 
