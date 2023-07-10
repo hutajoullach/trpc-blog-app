@@ -74,7 +74,7 @@ const PostCard = ({
             src={image ? image : defaultImg}
             width={414}
             height={314}
-            className="h-full w-full rounded-2xl object-cover"
+            className="h-60 w-auto rounded-2xl object-cover"
             alt="post image"
           />
         )}

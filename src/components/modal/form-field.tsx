@@ -4,10 +4,8 @@ type FormFieldProps = {
   type?: string;
   id: string;
   title: string;
-  // state?: string;
   placeholder: string;
   isTextArea?: boolean;
-  // setState: (value: string) => void;
   required?: boolean;
   disabled?: boolean;
   register: UseFormRegister<FieldValues>;
@@ -18,10 +16,8 @@ const FormField = ({
   type,
   id,
   title,
-  // state,
   placeholder,
   isTextArea,
-  // setState,
   required,
   disabled,
   register,
@@ -34,11 +30,9 @@ const FormField = ({
       {isTextArea ? (
         <textarea
           placeholder={placeholder}
-          // value={state}
           disabled={disabled}
           className="bg-light-white-100 w-full rounded-md bg-slate-200 p-4 outline-0"
           rows={5}
-          // onChange={(e) => setState(e.target.value)}
           {...register(id, { required })}
         />
       ) : (
@@ -47,7 +41,6 @@ const FormField = ({
           placeholder={placeholder}
           disabled={disabled}
           required
-          // value={state}
           className="bg-light-white-100 w-full rounded-md bg-slate-200 p-4 outline-0"
           {...register(id, { required })}
         />

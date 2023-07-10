@@ -1,4 +1,6 @@
+import { useEffect, useState } from "react";
 import Image from "next/image";
+import type { StaticImageData } from "next/image";
 
 import { api } from "~/utils/api";
 import type { RouterOutputs } from "~/utils/api";
@@ -9,15 +11,50 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 dayjs.extend(relativeTime);
 
+import {
+  accessoriesBag,
+  dessert,
+  fishVegetables,
+  threeDogs,
+} from "../../assets";
+
 type PostWithUser = RouterOutputs["posts"]["getAll"][number];
 const SinglePostCard = ({ postWithUser }: { postWithUser: PostWithUser }) => {
   const { post, author } = postWithUser;
 
+  const images = [accessoriesBag, dessert, fishVegetables, threeDogs];
+  const [defaultImg, setDefaultImg] = useState<StaticImageData | undefined>(
+    undefined
+  );
+
+  useEffect(() => {
+    const random = Math.floor(Math.random() * images.length);
+    if (random !== null || random !== undefined) {
+      setDefaultImg(images[random]);
+    }
+  }, [images]);
+
   return (
-    <div className="flex h-[95%] w-full items-center rounded-lg bg-slate-200 px-3 py-3 md:max-w-2xl">
+    <div className="flex h-full w-full items-center rounded-lg bg-slate-200 px-1 py-3 md:max-w-2xl">
       <div className="flex h-full w-full flex-col gap-4 px-6 py-6">
         <div className="flex w-full flex-col items-center gap-5">
-          <div className="flex w-full rounded-xl">
+          {post.imageSrc && (
+            <div className="h-[180px] overflow-hidden rounded-2xl">
+              <Image
+                src={post.imageSrc}
+                width={650}
+                height={20}
+                className="object-cover"
+                alt="bgImg"
+              />
+            </div>
+          )}
+          {!post.imageSrc && defaultImg && (
+            <div className="h-[180px] overflow-hidden rounded-2xl">
+              <Image src={defaultImg} width={650} height={20} alt="bgImg" />
+            </div>
+          )}
+          <div className="-mt-20 flex w-full rounded-xl px-2">
             <Image
               onClick={() => {
                 toast.error("Profile page not available yet!");
@@ -25,10 +62,10 @@ const SinglePostCard = ({ postWithUser }: { postWithUser: PostWithUser }) => {
               src={author.profileImageUrl}
               width={45}
               height={45}
-              className="cursor-pointer rounded-full object-cover hover:opacity-80"
+              className="cursor-pointer rounded-full border-2 object-cover hover:opacity-80"
               alt=""
             />
-            <div className="flex w-full justify-end px-3 py-3 text-sm font-semibold text-neutral-600">
+            <div className="flex w-full justify-end px-3 py-3 text-sm font-semibold text-neutral-200">
               <div
                 onClick={() => {
                   toast.error("Profile page not available yet!");
@@ -41,44 +78,9 @@ const SinglePostCard = ({ postWithUser }: { postWithUser: PostWithUser }) => {
           </div>
 
           <div className="text-md flex justify-center font-semibold text-neutral-600"></div>
-          {/* <div className="flex w-full rounded-full bg-white px-6 py-2 text-xs text-neutral-500 md:max-w-xs"> */}
           <div className="w-full rounded-lg bg-white px-3 py-4 text-sm">
-            {/* {pin.icontype === "emoji" &&
-              emojis.map(({ label, emoji }) => {
-                if (label === pin.emoji)
-                  return (
-                    <span
-                      key={pin.id}
-                      className="flex w-full justify-center text-lg"
-                    >
-                      {emoji}
-                    </span>
-                  );
-              })}
-
-            {pin.icontype === "svg" &&
-              svgicons.map(({ label, svg: Svg }) => {
-                if (label === pin.svgicon)
-                  return (
-                    <span
-                      key={pin.id}
-                      className={`flex w-full justify-center py-1 text-xl`}
-                    >
-                      <Svg color={pin.svgiconcolor} />
-                    </span>
-                  );
-              })} */}
             <p>{post.title}</p>
           </div>
-
-          {/* <span
-            className={`-mb-4 flex w-full text-left text-sm text-neutral-600`}
-          >
-            content
-          </span> */}
-          {/* <div className={`w-full rounded-lg bg-slate-700 px-3 py-4 text-sm`}>
-            <p>{post.content}</p>
-          </div> */}
         </div>
         <div
           className={`flex h-full w-full flex-1 rounded-lg bg-white px-3 py-4 text-sm`}
@@ -86,12 +88,6 @@ const SinglePostCard = ({ postWithUser }: { postWithUser: PostWithUser }) => {
           <p>{post.content}</p>
         </div>
         <div className="-mb-1 flex flex-col rounded-lg text-sm text-neutral-600">
-          {/* <span className="font-light">dropped @</span> */}
-          {/* {pin.city && pin.country && (
-            <span className="font-semibold">
-              {pin.city}, {pin.country}
-            </span>
-          )} */}
           <span className="flex-end flex font-light">
             {dayjs(post.createdAt).fromNow()}
           </span>
