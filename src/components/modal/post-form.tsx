@@ -124,11 +124,11 @@ const PostForm = () => {
         value={imageSrc}
       />
 
-      <div className="flex w-full items-center justify-start pt-6">
+      <div className="flex w-full items-center justify-center pt-6">
         <CustomButton
           type="submit"
           title="Post"
-          styles="bg-[#1dc071] py-2 px-8"
+          styles="bg-[#1dc071] py-3 px-12 font-semibold"
           handleClick={handleSubmit(onSubmit)}
           disabled={isPosting}
         />

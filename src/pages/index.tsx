@@ -7,6 +7,7 @@ import { SignInButton, SignOutButton, useUser } from "@clerk/nextjs";
 import useDisplayConfetti from "~/store/display-confetti-store";
 import Navbar from "~/components/navbar";
 import PostCard from "~/components/posts/post-card";
+import PostCardSkeleton from "~/components/posts/post-card-skeleton";
 import { PageLayout } from "~/components/layout";
 import { LoadingPage } from "../components/loading";
 import Confetti from "~/components/confetti";
@@ -20,7 +21,15 @@ type CardSectionProps = {
 const CardSection = ({ filteredData, input }: CardSectionProps) => {
   const { data, isLoading } = api.posts.getAll.useQuery();
 
-  if (isLoading) return <LoadingPage />;
+  if (isLoading) {
+    return (
+      <>
+        {[...Array(25)].map(() => (
+          <PostCardSkeleton />
+        ))}
+      </>
+    );
+  }
 
   if (!data)
     return (
